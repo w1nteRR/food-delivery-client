@@ -26,6 +26,7 @@ export const Auth: FC = () => {
                 }
             })()
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated])
 
     if(isLoading) return (
