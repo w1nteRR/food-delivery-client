@@ -1,25 +1,35 @@
 import React, { FC } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@material-ui/core'
+import { Box, Card, CardActionArea, CardContent, CardMedia, SvgIcon, Typography } from '@material-ui/core'
 
+import TimerIcon from '@material-ui/icons/Timer'
+import { Moped } from 'mdi-material-ui'
 
 interface IRestaurantCard {
     name: string
+    image: string
+    tags: Array<string>
+    deliveryTime: string
+    deliveryPrice: string
 }
 
 const useStyles = makeStyles({
     card: {
-        maxWidth: 345,
-        margin: 20,
-        boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.25)'
+        width: 375,
+        margin: 10,
+        boxShadow: 'none',
     },
     image: {
-        height: 160
+        height: 200
     }
 })
 
 export const RestaurantCard: FC<IRestaurantCard> = ({
-    name
+    name,
+    image,
+    tags,
+    deliveryPrice,
+    deliveryTime
 }) => {
 
     const styles = useStyles()
@@ -29,16 +39,54 @@ export const RestaurantCard: FC<IRestaurantCard> = ({
             <CardActionArea>
                 <CardMedia
                     className={styles.image}
-                    image="https://res.cloudinary.com/glovoapp/w_1200,f_auto,q_auto/Stores/ic01vtq4wubqkler3olv"
+                    image={image}
                     title=""
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        Name
+                    <Typography 
+                        gutterBottom 
+                        variant="h6" 
+                        component="h2"
+                    >
+                        {name}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species
-                    </Typography>
+                    <Box display='flex' justifyContent='space-between'>
+                        <Box display='inherit' width='90px' justifyContent='space-between'>
+                            <TimerIcon fontSize='small' />
+                            <Typography 
+                                variant="body2" 
+                                color="textSecondary" 
+                                component="p"
+                            >
+                                {deliveryTime}
+                            </Typography>
+                        </Box>
+                        <Box display='inherit' width='75px' justifyContent='space-between'>
+                            <SvgIcon fontSize='small'>
+                                <Moped />
+                            </SvgIcon>
+                            <Typography 
+                                variant="body2" 
+                                color='textSecondary' 
+                                component="p"
+                            >
+                                {deliveryPrice}
+                            </Typography>
+                        </Box>
+                    </Box>
+                    <Box margin='10px 0'>
+                    {
+                        tags.map((tag, index) => 
+                            <Typography 
+                                key={index} 
+                                variant="overline" 
+                                style={{ margin: '0 10px 0 0' }}
+                            >
+                                {tag}
+                            </Typography>
+                        )
+                    }
+                    </Box>
                 </CardContent>
             </CardActionArea>
         </Card>
