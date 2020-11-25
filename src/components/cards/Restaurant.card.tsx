@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { useHistory } from 'react-router'
 import { makeStyles } from '@material-ui/core/styles'
 import { Box, Card, CardActionArea, CardContent, CardMedia, SvgIcon, Typography } from '@material-ui/core'
 
@@ -11,12 +12,13 @@ interface IRestaurantCard {
     tags: Array<string>
     deliveryTime: string
     deliveryPrice: string
+    _id: string
 }
 
 const useStyles = makeStyles({
     card: {
         width: 375,
-        margin: 10,
+        margin: '30px 10px',
         boxShadow: 'none',
     },
     image: {
@@ -29,14 +31,16 @@ export const RestaurantCard: FC<IRestaurantCard> = ({
     image,
     tags,
     deliveryPrice,
-    deliveryTime
+    deliveryTime,
+    _id
 }) => {
 
     const styles = useStyles()
+    const history = useHistory()
 
     return (
         <Card className={styles.card}>
-            <CardActionArea>
+            <CardActionArea onClick={() => history.push(`/restaurant/${_id}`)}>
                 <CardMedia
                     className={styles.image}
                     image={image}
