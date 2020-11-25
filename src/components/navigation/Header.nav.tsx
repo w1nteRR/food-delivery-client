@@ -1,8 +1,9 @@
 import React, { FC } from 'react'
 import { useHistory } from 'react-router'
-import { AppBar, Toolbar, IconButton, Avatar } from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Avatar, Box } from '@material-ui/core'
 
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
+import HomeIcon from '@material-ui/icons/Home'
 
 import { useAuth } from '../../context/auth.context'
 
@@ -23,20 +24,29 @@ export const Header: FC = () => {
             className={styles.appBar}
         >
             <Toolbar className={styles.toolBar}>
-                <LocationStatus />
-                <IconButton 
-                    aria-label="menu" 
-                    color='secondary'
+                <IconButton
+                    aria-label='menu'
+                    color='default'
+                    onClick={() => history.push('/home')}
                 >
-                    <ShoppingBasketIcon />
+                    <HomeIcon />
                 </IconButton>
-                <IconButton  
-                    color="inherit" 
-                    aria-label="menu"
-                    onClick={() => history.push('/profile')}
-                >
-                    <Avatar alt={user.familyName} src={user.picture} />
-                </IconButton>
+                <Box display='flex'>
+                    <LocationStatus />
+                    <IconButton 
+                        aria-label="menu" 
+                        color='default'
+                    >
+                        <ShoppingBasketIcon />
+                    </IconButton>
+                    <IconButton  
+                        color="inherit" 
+                        aria-label="menu"
+                        onClick={() => history.push('/profile')}
+                    >
+                        <Avatar alt={user.familyName} src={user.picture} />
+                    </IconButton>
+                </Box>
             </Toolbar>
     </AppBar>
     )
