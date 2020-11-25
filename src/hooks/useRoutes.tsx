@@ -21,7 +21,7 @@ export const useRoutes = () => {
         <Switch>
             <Route path='/home' component={Home} />
             <Route path='/profile' component={Profile} />
-            <Route path='/restaurant' component={Restaurant} />
+            <Route path='/restaurant/:id' component={Restaurant} />
 
             <Redirect to='/home' />
         </Switch>
