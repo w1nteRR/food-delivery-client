@@ -24,7 +24,7 @@ export const MenuNav: FC<{ sections: Array<string> }> = ({
                 aria-label="scrollable auto tabs example"
                 style={{
                     position: 'sticky',
-                    top: 0,
+                    top: 70,
                     background: '#fff',
                     zIndex: 1
                 }}
