@@ -5,15 +5,18 @@ import { AppBar, Toolbar, IconButton, Avatar, Box } from '@material-ui/core'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import HomeIcon from '@material-ui/icons/Home'
 
-import { useAuth } from '../../context/auth.context'
-
 import { LocationStatus } from '../location/Location.status'
+
+import { useCart } from '../../context/cart.context'
+import { useAuth } from '../../context/auth.context'
 
 import { useStyles } from './styles'
 
 export const Header: FC = () => {
 
     const { user } = useAuth()
+    const { toggleCart, cart } = useCart()
+
     const styles = useStyles()
     const history = useHistory()
 
@@ -24,6 +27,7 @@ export const Header: FC = () => {
             className={styles.appBar}
         >
             <Toolbar className={styles.toolBar}>
+                <div>
                 <IconButton
                     aria-label='menu'
                     color='default'
@@ -31,14 +35,16 @@ export const Header: FC = () => {
                 >
                     <HomeIcon />
                 </IconButton>
+                <IconButton 
+                    aria-label="menu" 
+                    color={cart.items.length ? 'primary' : 'default'}
+                    onClick={toggleCart}
+                >
+                    <ShoppingBasketIcon />
+                </IconButton>
+                </div>
                 <Box display='flex'>
                     <LocationStatus />
-                    <IconButton 
-                        aria-label="menu" 
-                        color='default'
-                    >
-                        <ShoppingBasketIcon />
-                    </IconButton>
                     <IconButton  
                         color="inherit" 
                         aria-label="menu"
