@@ -1,12 +1,33 @@
 import React, { FC } from 'react'
+import { RouteComponentProps } from 'react-router-dom'
+import { Container } from '@material-ui/core'
 
-import { useAuth } from '../../context/auth.context'
+import restaurants from '../../utils/data/restaurants.json'
 
-export const Restaurant: FC = () => {
+import { About } from '../../components/restaurant/About.restaurant'
+import { Nav } from '../../components/restaurant/Nav.restaurant'
 
-    const { user } = useAuth()
+interface MatchParams {
+    id: string
+}
 
-    console.log(user)
+interface RestaurantProps extends RouteComponentProps<MatchParams> {}
 
-    return <p>restaurant page</p>
+export const Restaurant: FC<RestaurantProps> = ({
+    match
+}) => {
+
+    const { id } = match.params
+
+    const rest = restaurants[parseInt(id)]
+
+    return (
+        <Container>
+            <About 
+                name={rest.name}
+                tags={rest.tags || ['']}
+            />
+            <Nav />
+        </Container>
+    )
 }
