@@ -5,6 +5,7 @@ import { Box, Card, CardActionArea, CardContent, CardMedia, SvgIcon, Typography 
 
 import TimerIcon from '@material-ui/icons/Timer'
 import { Moped } from 'mdi-material-ui'
+import { Tag } from '../utils/Tag'
 
 interface IRestaurantCard {
     name: string
@@ -55,28 +56,18 @@ export const RestaurantCard: FC<IRestaurantCard> = ({
                         {name}
                     </Typography>
                     <Box display='flex' justifyContent='space-between'>
-                        <Box display='inherit' width='90px' justifyContent='space-between'>
-                            <TimerIcon fontSize='small' />
-                            <Typography 
-                                variant="body2" 
-                                color="textSecondary" 
-                                component="p"
-                            >
-                                {deliveryTime}
-                            </Typography>
-                        </Box>
-                        <Box display='inherit' width='75px' justifyContent='space-between'>
-                            <SvgIcon fontSize='small'>
-                                <Moped />
-                            </SvgIcon>
-                            <Typography 
-                                variant="body2" 
-                                color='textSecondary' 
-                                component="p"
-                            >
-                                {deliveryPrice}
-                            </Typography>
-                        </Box>
+                        <Tag 
+                            icon={<TimerIcon fontSize='small' />}
+                            text={deliveryTime}
+                        />
+                            <Tag 
+                            icon={
+                                <SvgIcon fontSize='small'>
+                                    <Moped />
+                                </SvgIcon>
+                            }
+                            text={deliveryPrice}
+                        />
                     </Box>
                     <Box margin='10px 0'>
                     {
