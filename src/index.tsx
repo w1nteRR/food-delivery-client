@@ -6,7 +6,9 @@ import { App } from './App'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 import { Auth0Provider } from '@auth0/auth0-react'
+
 import { AuthProvider } from './context/auth.context'
+import { CartProvider } from './context/cart.context'
 
 ReactDOM.render(
 	<BrowserRouter>
@@ -18,7 +20,9 @@ ReactDOM.render(
 			scope="read:current_user update:current_user_metadata"
 		>
 			<AuthProvider>
+			<CartProvider>
 				<App />
+			</CartProvider>
 			</AuthProvider>
 		</Auth0Provider>
 	</BrowserRouter>
@@ -26,5 +30,5 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-serviceWorkerRegistration.unregister()
+serviceWorkerRegistration.register()
 
