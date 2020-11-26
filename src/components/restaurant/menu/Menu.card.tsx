@@ -7,7 +7,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 300,
+        width: 300,
         boxShadow: 'none',
         margin: 20
     },
@@ -18,15 +18,19 @@ const useStyles = makeStyles({
 })
 
 interface MenuCardProps {
-    name?: string
-    description?: string
-    price?: string
+    name: string
+    description: string
+    price: string
+    image: string
+    onPriceClick?: () => void
 }
 
 export const MenuCard: FC<MenuCardProps> = ({
     name,
     description,
-    price
+    price,
+    image,
+    onPriceClick
 }) => {
 
     const styles = useStyles()
@@ -36,17 +40,15 @@ export const MenuCard: FC<MenuCardProps> = ({
             <CardActionArea>
                 <CardMedia
                     component="img"
-                    alt="Contemplative Reptile"
                     height="150"
-                    image="https://images.ladbible.com/thumbnail?type=jpeg&url=http://beta.ems.ladbiblegroup.com/s3/content/895adf215df95202b6781ea888937fce.png&quality=70&height=700"
-                    title="Contemplative Reptile"
+                    image={image}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h6" component="h2">
-                        Big Mac
+                        {name}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        {description}
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -57,8 +59,9 @@ export const MenuCard: FC<MenuCardProps> = ({
                 <Button
                     variant='outlined'
                     color='primary'
+                    onClick={onPriceClick}
                 >
-                    56 UAH
+                    {price}
                 </Button>
             </CardActions>
         </Card>
