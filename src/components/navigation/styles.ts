@@ -4,10 +4,12 @@ export const useStyles = makeStyles({
     appBar: {
         borderRadius: 5,
         background: '#fff',
-        boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.25)'
+        boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.25)',
+        position: 'sticky',
+        top: 10
     },
     toolBar: {
         display: 'flex',
-        justifyContent: 'flex-end'
+        justifyContent: 'space-between'
     }
 })
