@@ -20,7 +20,7 @@ export const CartItem: FC<CartItemProps> = ({
 }) => 
    <Paper elevation={2} style={{
        margin: '20px 0'
-   }}>
+    }}>
         <Box
             p={3}
             display='flex'
@@ -51,6 +51,11 @@ export const CartItem: FC<CartItemProps> = ({
                     <MenuItem value={3}>3</MenuItem>
                 </Select>
                 </FormControl>
+            </Box>
+            <Box 
+                display='flex' 
+                justifyContent='flex-end'
+            >
                 <IconButton  
                     aria-label="delete" 
                     color="secondary"
