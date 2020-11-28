@@ -38,6 +38,7 @@ export const MenuNav: FC<{ sections: Array<string> }> = ({
                     <TabPanel
                         value={value}
                         index={index}
+                        key={index}
                     >
                     {
                         value === 0
