@@ -1,16 +1,15 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { Box, IconButton, Typography } from '@material-ui/core'
 
 import MyLocationIcon from '@material-ui/icons/MyLocation'
 
 import { LocationModal } from './Location.modal'
+import { useLocation } from '../../context/location.context'
 
 export const LocationStatus: FC = () => {
+
+    const { toggleModal, location } = useLocation()
     
-    const [isModalOpen, setModalStatus] = useState(false)
-
-    const address = localStorage.getItem('address')
-
     const _addressFormatted = (address: string) => {
         const addressArr = address.split(',')
 
@@ -29,20 +28,17 @@ export const LocationStatus: FC = () => {
                 style={{ fontSize: 10 }}
             >
                 {
-                    address ? _addressFormatted(address) : 'Pick up address'
+                    location.address ? _addressFormatted(location.address) : 'Pick up address'
                 }
             </Typography>
             <IconButton 
                 aria-label="menu" 
-                onClick={() => setModalStatus(true)}
+                onClick={toggleModal}
             >
-                <MyLocationIcon color={address ? 'primary' : 'error'} />
+                <MyLocationIcon color={location.address ? 'primary' : 'error'} />
             </IconButton>
         </Box>
-        <LocationModal 
-            isOpen={isModalOpen} 
-            close={() => setModalStatus(false)}
-        />
+        <LocationModal />
         </>
     )
 }
