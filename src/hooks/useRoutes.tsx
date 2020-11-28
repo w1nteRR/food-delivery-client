@@ -9,8 +9,10 @@ import { SignIn } from '../pages/auth/SignIn'
 import { Profile } from '../pages/profile/Profile'
 import { Restaurant } from '../pages/restaurant/Restaurant'
 import { Home } from '../pages/home/Home'
+import { Checkout } from '../pages/checkout/Checkout'
 
 import { useAuth } from '../context/auth.context'
+import { RestaurantProvider } from '../context/restaurant.context'
 
 export const useRoutes = () => {    
     const { isAuth } = useAuth()
@@ -21,8 +23,10 @@ export const useRoutes = () => {
         <Switch>
             <Route path='/home' component={Home} />
             <Route path='/profile' component={Profile} />
-            <Route path='/restaurant/:id' component={Restaurant} />
-
+            <RestaurantProvider>
+                <Route path='/restaurant/:id' component={Restaurant} />
+                <Route path='/checkout' component={Checkout} />
+            </RestaurantProvider>
             <Redirect to='/home' />
         </Switch>
         </>
