@@ -1,15 +1,19 @@
 import React, { FC } from 'react'
-
+import { useHistory } from 'react-router'
 import { Box, Button, Drawer, Typography } from '@material-ui/core'
+
 import { useCart } from '../../context/cart.context'
 
 import { CartItem } from './Cart.item'
+import { CartDialog } from './Cart.dialog'
 
 export const Cart: FC = () => {
     
     const { cart, toggleCart, removeFromCart, totalPrice, updateItemCount } = useCart()
+    const history = useHistory()
         
     return (
+        <>
         <Drawer 
             anchor='right' 
             open={cart.isOpen} 
@@ -45,11 +49,14 @@ export const Cart: FC = () => {
                         variant='outlined'
                         color='primary'
                         fullWidth
+                        onClick={() => history.push('/checkout')}
                     >
                         {`Checkout ${totalPrice() + ' UAH'}`}
                     </Button>
                 </Box>
             </Box>
-          </Drawer>
+        </Drawer>
+        <CartDialog />
+        </>
     )
 }

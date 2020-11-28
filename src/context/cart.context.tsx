@@ -7,18 +7,27 @@ interface CartItem {
     _id: string
 }
 
+interface CartDialog {
+    isOpen: boolean
+}
+
 interface Cart {
     isOpen: boolean
     items: Array<CartItem>
+    restaurantId: string | null
 }
 
 interface CartContextData {
     cart: Cart
+    cartDialog: CartDialog
     toggleCart(): void
-    addToCart(item: CartItem): void
+    addToCart(item: CartItem, restaurantId: string): void
     removeFromCart(_id: string): void
     updateItemCount(_id: string, newCount: number): void
     totalPrice(): number
+    openCartDialog(): void
+    closeCartDialog(): void
+    cleanCart(): void
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData)
@@ -28,7 +37,12 @@ export const CartProvider: FC = ({
 }) => { 
     const [cart, setCart] = useState<Cart>({
         isOpen: false,
-        items: []
+        items: [],
+        restaurantId: null
+    })
+
+    const [cartDialog, setCartDialog] = useState({
+        isOpen: false
     })
 
     const toggleCart = useCallback(() => {
@@ -38,7 +52,13 @@ export const CartProvider: FC = ({
         })
     }, [cart])
 
-    const addToCart = useCallback((item: CartItem) => {
+    const addToCart = useCallback((item: CartItem, restaurantId: string) => {
+
+        if(cart.restaurantId && cart.restaurantId !== restaurantId) {
+            return setCartDialog({
+                isOpen: true
+            })
+        }  
 
         const itemInCart = cart.items.some(i => i._id === item._id)
 
@@ -46,7 +66,8 @@ export const CartProvider: FC = ({
 
         setCart({
             ...cart,
-            items: cart.items.concat(item)
+            items: cart.items.concat(item),
+            restaurantId
         })
     
     }, [cart])
@@ -84,15 +105,30 @@ export const CartProvider: FC = ({
         
     }, [cart.items])
 
+    const cleanCart = useCallback(() => {
+        setCart({
+            ...cart,
+            items: [],
+            restaurantId: null
+        })
+    }, [cart])
+
+    const openCartDialog = useCallback(() => setCartDialog({ ...cartDialog, isOpen: true }), [cartDialog])
+    const closeCartDialog = useCallback(() => setCartDialog({ ...cartDialog, isOpen: false }), [cartDialog])
+
     return (
         <CartContext.Provider
             value={{
                 cart,
+                cartDialog,
                 toggleCart,
                 addToCart,
                 removeFromCart,
                 totalPrice,
-                updateItemCount
+                updateItemCount,
+                openCartDialog,
+                closeCartDialog,
+                cleanCart
             }}
         >
             {children}
