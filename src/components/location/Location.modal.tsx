@@ -4,16 +4,11 @@ import { Dialog, DialogContent, DialogTitle, TextField } from '@material-ui/core
 import { useAutoComplete } from '../../hooks/maps/useAutocomplete'
 import { useDebouce } from '../../hooks/useDebounce'
 import { AddressCard } from '../cards/Address.card'
+import { useLocation } from '../../context/location.context'
 
-interface ILocationModalProps {
-    isOpen: boolean
-    close(): void
-}
+export const LocationModal: FC = () => {
 
-export const LocationModal: FC<ILocationModalProps> = ({
-    isOpen,
-    close
-}) => {
+    const { modal, toggleModal, addAddress } = useLocation()
 
     const [inputVal, setInputVal] = useState('')
 
@@ -21,15 +16,15 @@ export const LocationModal: FC<ILocationModalProps> = ({
     const prediticons = useAutoComplete(debouncedValue)
 
     const _onCardClick = (address: string) => {
-        localStorage.setItem('address', address)
-        close()
+        addAddress(address)
+        toggleModal()
     }
 
     return (
         <Dialog
-            onClose={close}
+            onClose={toggleModal}
             aria-labelledby="simple-dialog-content" 
-            open={isOpen}
+            open={modal.isOpen}
         >
             <DialogTitle id="simple-dialog-title">Set delivery address</DialogTitle>
             <DialogContent>
