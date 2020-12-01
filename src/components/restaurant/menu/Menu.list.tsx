@@ -3,14 +3,16 @@ import { Box, Typography } from '@material-ui/core'
 
 import { IMenu } from '../../../interfaces/menu/IMenu'
 import { MenuCard } from './Menu.card'
-import { useCart } from '../../../context/cart.context'
 
+import { useCart } from '../../../context/cart.context'
+import { useRestaurant } from '../../../context/restaurant.context'
 
 export const MenuList: FC<{ menu: Array<IMenu> }> = ({
     menu
 }) => {
 
     const { addToCart } = useCart()
+    const { restaurant } = useRestaurant()
 
     return (
         <>
@@ -38,12 +40,16 @@ export const MenuList: FC<{ menu: Array<IMenu> }> = ({
                                     image={item.image}
                                     price={item.price}
                                     description={item.description}
-                                    onPriceClick={() => addToCart({
-                                        name: item.name,
-                                        price: item.price,
-                                        count: 1,
-                                        _id: item._id
-                                    })}
+                                    onPriceClick={() => addToCart(
+                                        {
+                                            name: item.name,
+                                            price: item.price,
+                                            count: 1,
+                                            _id: item._id
+                                        }, 
+                                        restaurant._id!
+                                        )
+                                    }
                                 />
                             )
                         }
