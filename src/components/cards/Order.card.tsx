@@ -1,17 +1,18 @@
 import React, { FC } from 'react'
-import { Paper, Box } from '@material-ui/core'
+import { Box } from '@material-ui/core'
 
 export const OrderCard: FC = ({
     children
 }) => 
-    <Paper elevation={2}>
-        <Box 
-            p={2}
-            m={2}
-            display='flex'
-            justifyContent='space-around'
-            alignItems='center'
-        >
-            {children}
-        </Box>
-    </Paper>
+    <Box 
+        border='.5px solid silver'
+        borderRadius='5px'
+        p={2}
+        margin='20px 0'
+        display='flex'
+        justifyContent='space-around'
+        alignItems='center'
+    >
+        {children}
+    </Box>
+    
