@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
 import { useHistory } from 'react-router'
-import { AppBar, Toolbar, IconButton, Avatar, Box } from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Avatar, Box, SvgIcon } from '@material-ui/core'
 
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import HomeIcon from '@material-ui/icons/Home'
+import { Moped } from 'mdi-material-ui'
 
 import { LocationStatus } from '../location/Location.status'
 
@@ -35,10 +36,21 @@ export const Header: FC = () => {
                 >
                     <HomeIcon />
                 </IconButton>
+                <IconButton
+                    aria-label='menu'
+                    color='default'
+                    onClick={() => history.push('/delivery')}
+                >
+                    <SvgIcon>
+                        <Moped />
+                    </SvgIcon>
+                </IconButton>
                 <IconButton 
                     aria-label="menu" 
                     color={cart.items.length ? 'primary' : 'default'}
                     onClick={toggleCart}
+
+                    disabled={!cart.items.length}
                 >
                     <ShoppingBasketIcon />
                 </IconButton>
