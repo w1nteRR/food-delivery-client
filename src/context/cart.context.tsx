@@ -1,4 +1,7 @@
-import React, { createContext, FC, useCallback, useState, useContext } from 'react'
+import React, { createContext, FC, useCallback, useState, useContext, useEffect } from 'react'
+
+
+type Alert = 'error' | undefined
 
 interface CartItem {
     name: string
@@ -11,6 +14,12 @@ interface CartDialog {
     isOpen: boolean
 }
 
+interface CartAlert {
+    isOpen: boolean
+    type: Alert
+    text: string
+}
+
 interface Cart {
     isOpen: boolean
     items: Array<CartItem>
@@ -20,6 +29,7 @@ interface Cart {
 interface CartContextData {
     cart: Cart
     cartDialog: CartDialog
+    alert: CartAlert
     toggleCart(): void
     addToCart(item: CartItem, restaurantId: string): void
     removeFromCart(_id: string): void
@@ -28,6 +38,7 @@ interface CartContextData {
     openCartDialog(): void
     closeCartDialog(): void
     cleanCart(): void
+    showAlert(type: Alert, text: string): void
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData)
@@ -45,12 +56,28 @@ export const CartProvider: FC = ({
         isOpen: false
     })
 
+    const [alert, setAlert] = useState<CartAlert>({
+        isOpen: false,
+        text: '',
+        type: undefined    
+    })
+
     const toggleCart = useCallback(() => {
         setCart({
             ...cart,
             isOpen: !cart.isOpen
         })
     }, [cart])
+
+    const showAlert = useCallback((type: Alert, text: string) => {
+        setAlert({
+            isOpen: true,
+            type,
+            text
+        })
+
+        setTimeout(() => setAlert({ isOpen: false, type: undefined, text: '' }), 3000)
+    }, [])
 
     const addToCart = useCallback((item: CartItem, restaurantId: string) => {
 
@@ -62,7 +89,7 @@ export const CartProvider: FC = ({
 
         const itemInCart = cart.items.some(i => i._id === item._id)
 
-        if(itemInCart) return console.log('item exists')
+        if(itemInCart) return showAlert('error', 'Already in basket')
 
         setCart({
             ...cart,
@@ -116,11 +143,22 @@ export const CartProvider: FC = ({
     const openCartDialog = useCallback(() => setCartDialog({ ...cartDialog, isOpen: true }), [cartDialog])
     const closeCartDialog = useCallback(() => setCartDialog({ ...cartDialog, isOpen: false }), [cartDialog])
 
+
+    // useEffect(() => {
+
+    //     if(cart.items.length) return
+        
+    //     return setCart({...cart, isOpen: false , restaurantId: null})
+
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [cart.items])
+
     return (
         <CartContext.Provider
             value={{
                 cart,
                 cartDialog,
+                alert,
                 toggleCart,
                 addToCart,
                 removeFromCart,
@@ -128,7 +166,8 @@ export const CartProvider: FC = ({
                 updateItemCount,
                 openCartDialog,
                 closeCartDialog,
-                cleanCart
+                cleanCart,
+                showAlert
             }}
         >
             {children}
