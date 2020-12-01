@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { useHistory } from 'react-router'
-import { Box, Button, Drawer, Typography } from '@material-ui/core'
+import { Box, Button, Drawer, Snackbar, Typography } from '@material-ui/core'
+import { Alert } from '@material-ui/lab'
 
 import { useCart } from '../../context/cart.context'
 
@@ -9,7 +10,7 @@ import { CartDialog } from './Cart.dialog'
 
 export const Cart: FC = () => {
     
-    const { cart, toggleCart, removeFromCart, totalPrice, updateItemCount } = useCart()
+    const { cart, alert, toggleCart, removeFromCart, totalPrice, updateItemCount } = useCart()
     const history = useHistory()
         
     return (
@@ -49,7 +50,10 @@ export const Cart: FC = () => {
                         variant='outlined'
                         color='primary'
                         fullWidth
-                        onClick={() => history.push('/checkout')}
+                        onClick={() => {
+                            history.push('/checkout')
+                            toggleCart()
+                        }}
                     >
                         {`Checkout ${totalPrice() + ' UAH'}`}
                     </Button>
@@ -57,6 +61,14 @@ export const Cart: FC = () => {
             </Box>
         </Drawer>
         <CartDialog />
+        <Snackbar
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            open={alert.isOpen}
+        >
+            <Alert severity={alert.type!}>
+                {alert.text}
+            </Alert>
+        </Snackbar>
         </>
     )
 }
