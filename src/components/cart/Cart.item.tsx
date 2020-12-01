@@ -18,8 +18,10 @@ export const CartItem: FC<CartItemProps> = ({
     onDeleteClick,
     onSelectChange
 }) => 
-   <Paper elevation={2} style={{
-       margin: '20px 0'
+   <Paper elevation={0} style={{
+       margin: '20px 0',
+       border: '.5px solid silver',
+       borderRadius: 5
     }}>
         <Box
             p={3}

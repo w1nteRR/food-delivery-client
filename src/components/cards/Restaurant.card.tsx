@@ -18,8 +18,8 @@ interface IRestaurantCard {
 
 const useStyles = makeStyles({
     card: {
-        width: 375,
-        margin: '30px 10px',
+        width: 340,
+        margin: '20px 0',
         boxShadow: 'none',
     },
     image: {
